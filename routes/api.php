@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\InterestedBuyerController;
 use App\Http\Controllers\Api\StoreController;
+use App\Http\Controllers\Api\StoreSaleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/stores', [StoreController::class, 'index']);
+Route::get('stores', [StoreController::class, 'index']);
+Route::get('stores/{id}', [StoreController::class, 'show']);
+Route::post('interested', [InterestedBuyerController::class, 'store']);
+Route::post('store-sales', [StoreSaleController::class, 'store']);
+

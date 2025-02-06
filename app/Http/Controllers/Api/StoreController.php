@@ -26,7 +26,7 @@ class StoreController extends Controller
                 'monthly_profit' => $store['monthly_profit'],
                 'category' => $store['category'],
                 'platform' => $store['platform'],
-                'images' => json_encode($store['images'],JSON_UNESCAPED_UNICODE),
+                'images' => json_encode($store['images'], JSON_UNESCAPED_UNICODE),
                 'user_id' => $store['user_id'],
                 'store_activity' => $store['store_activity'],
                 'short_description' => $store['short_description'],
@@ -47,20 +47,20 @@ class StoreController extends Controller
                 'product_source' => $store['product_source'],
                 'store_documentation' => $store['store_documentation'],
                 'inventory_value' => $store['inventory_value'],
-                'growth_opportunities' => json_encode($store['growth_opportunities'],JSON_UNESCAPED_UNICODE),
+                'growth_opportunities' => json_encode($store['growth_opportunities'], JSON_UNESCAPED_UNICODE),
                 'competitors' => json_encode($store['competitors']),
                 'experience_required' => $store['experience_required'],
                 'time_commitment' => $store['time_commitment'],
                 'people_required' => $store['people_required'],
-                'daily_tasks' => json_encode($store['daily_tasks'],JSON_UNESCAPED_UNICODE),
-                'marketing_activities' => json_encode($store['marketing_activities'],JSON_UNESCAPED_UNICODE),
+                'daily_tasks' => json_encode($store['daily_tasks'], JSON_UNESCAPED_UNICODE),
+                'marketing_activities' => json_encode($store['marketing_activities'], JSON_UNESCAPED_UNICODE),
                 'monthly_growth_rate' => $store['monthly_growth_rate'],
                 'active_customers' => $store['active_customers'],
                 'social_media_followers' => $store['social_media_followers'],
                 'knowledge_transfer_sessions' => $store['knowledge_transfer_sessions'],
                 'technical_support' => $store['technical_support'],
-                'training_courses' => json_encode($store['training_courses'],JSON_UNESCAPED_UNICODE),
-                'included_assets' => json_encode($store['included_assets'],JSON_UNESCAPED_UNICODE),
+                'training_courses' => json_encode($store['training_courses'], JSON_UNESCAPED_UNICODE),
+                'included_assets' => json_encode($store['included_assets'], JSON_UNESCAPED_UNICODE),
                 'negotiable_price' => $store['negotiable_price'],
                 'slug' => $store['slug'],
                 'is_approved' => $store['is_approved'],
@@ -82,29 +82,37 @@ class StoreController extends Controller
     }
 
     public function index()
-{
-    $stores = Store::all(); 
-    // dd(method_exists($stores[0], 'getIdAttribute'));
+    {
+        $stores = Store::all();
+        // dd(method_exists($stores[0], 'getIdAttribute'));
 
 
 
-    $stores->transform(function($store) {
-        // Only decode if the field is a string
-        if (is_string($store->images)) {
-            $store->images = json_decode($store->images, true);
+        $stores->transform(function ($store) {
+            // Only decode if the field is a string
+            if (is_string($store->images)) {
+                $store->images = json_decode($store->images, true);
+            }
+            if (is_string($store->daily_tasks)) {
+                $store->daily_tasks = json_decode($store->daily_tasks, true);
+            }
+            if (is_string($store->growth_opportunities)) {
+                $store->growth_opportunities = json_decode($store->growth_opportunities, true);
+            }
+
+            // Add decoding for other fields here if necessary
+            return $store;
+        });
+
+        return response()->json($stores, 200, [], JSON_UNESCAPED_UNICODE);
+    }
+
+    public function show($id)
+    {
+        $store = Store::where('id',$id)->where('deleted_at',null)->where('is_approved',true)->first();
+        if (!$store) {
+            return response()->json([], 200, [], JSON_UNESCAPED_UNICODE);
         }
-        if (is_string($store->daily_tasks)) {
-            $store->daily_tasks = json_decode($store->daily_tasks, true);
-        }
-        if (is_string($store->growth_opportunities)) {
-            $store->growth_opportunities = json_decode($store->growth_opportunities, true);
-        }
-        
-        // Add decoding for other fields here if necessary
-        return $store;
-    });
-
-    return response()->json($stores, 200, [], JSON_UNESCAPED_UNICODE);
-}
-
+        return response()->json($store, 200, [], JSON_UNESCAPED_UNICODE);
+    }
 }
