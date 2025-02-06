@@ -9,6 +9,7 @@ class Store extends Model
 {
     use HasFactory;
     protected $casts = [
+        'id' => 'string',
         'images' => 'array',
         'growth_opportunities' => 'array',
         'daily_tasks' => 'array',
@@ -16,5 +17,17 @@ class Store extends Model
         'training_courses' => 'array',
         'included_assets' => 'array',
         'competitors' => 'array',
+        'inventory_included' => 'boolean',
+        'adminAccount' => 'boolean',
+        'brandIdentity' => 'boolean',
+        'domain' => 'boolean',
+        'adminAccount' => 'boolean',
+        'creativeAssets' => 'boolean',
+        'supplierDetails' => 'boolean',
+        'socialMediaAccounts' => 'boolean',
+        'negotiable_price' => 'boolean',
+        'is_approved' => 'boolean',
+        'is_reserved' => 'boolean',
+        'is_sold' => 'boolean',
     ];
 }

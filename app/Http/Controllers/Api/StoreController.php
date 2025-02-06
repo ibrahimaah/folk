@@ -83,7 +83,10 @@ class StoreController extends Controller
 
     public function index()
 {
-    $stores = Store::all(); // Retrieve all stores
+    $stores = Store::all(); 
+    // dd(method_exists($stores[0], 'getIdAttribute'));
+
+
 
     $stores->transform(function($store) {
         // Only decode if the field is a string
@@ -96,6 +99,7 @@ class StoreController extends Controller
         if (is_string($store->growth_opportunities)) {
             $store->growth_opportunities = json_decode($store->growth_opportunities, true);
         }
+        
         // Add decoding for other fields here if necessary
         return $store;
     });
