@@ -22,8 +22,8 @@ class StoreSaleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'seller_name' => 'required|string|max:255',
-            'seller_phone' => 'required|string|max:20',
+            'seller_name' => 'nullable|string|max:255',
+            'seller_phone' => 'nullable|string|max:20',
             'title' => 'required|string|max:255',
             'store_activity' => 'required|string|max:255',
             'store_url' => 'required|url|max:255',

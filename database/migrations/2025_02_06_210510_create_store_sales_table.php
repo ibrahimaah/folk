@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('store_sales', function (Blueprint $table) { 
                 $table->id();
-                $table->string('seller_name');
-                $table->string('seller_phone');
+                $table->string('seller_name')->nullable();
+                $table->string('seller_phone')->nullable();
                 $table->string('title');
                 $table->string('store_activity');
                 $table->string('store_url');
@@ -32,6 +32,7 @@ return new class extends Migration
                 $table->string('store_language');
                 $table->string('target_market');
                 $table->boolean('inventory_included');
+                $table->string('slug')->unique();
                 $table->boolean('is_approved')->default(false);
                 $table->timestamps(); 
         });

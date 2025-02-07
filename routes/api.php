@@ -26,4 +26,5 @@ Route::get('stores', [StoreController::class, 'index']);
 Route::get('stores/{id}', [StoreController::class, 'show']);
 Route::post('interested', [InterestedBuyerController::class, 'store']);
 Route::post('store-sales', [StoreSaleController::class, 'store']);
+Route::post('approve/{id}', [StoreSaleController::class, 'approve']);
 

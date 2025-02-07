@@ -74,8 +74,8 @@ class StoreController extends Controller
                 'url' => $store['url'],
                 'is_reserved' => $store['is_reserved'],
                 'is_sold' => $store['is_sold'],
-                'created_at' => Carbon::parse($store['created_at'])->toDateTimeString(),
-                'updated_at' => Carbon::parse($store['updated_at'])->toDateTimeString()
+                'created_at' => Carbon::parse($store['created_at']),
+                'updated_at' => Carbon::parse($store['updated_at'])
             ]);
         }
 
@@ -116,8 +116,13 @@ class StoreController extends Controller
     {
         try 
         {
-            $store = Store::where('id', $id)->where('deleted_at', null)->where('is_approved', true)->first();
-            if (!$store) {
+            $store = Store::where('id', $id)
+                          ->where('deleted_at', null)
+                          ->where('is_approved', true)
+                          ->first();
+                          
+            if (!$store) 
+            {
                 return response()->json([], 200, [], JSON_UNESCAPED_UNICODE);
             }
 

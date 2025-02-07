@@ -13,6 +13,6 @@ class StoreSale extends Model
         'store_age', 'monthly_revenue', 'price', 'is_currently_operating', 
         'reason_for_sale', 'notes', 'category', 'platform', 'short_description', 
         'store_platform', 'store_category', 'store_language', 'target_market', 
-        'inventory_included', 'is_approved',
+        'inventory_included', 'is_approved','slug'
     ];
 }
