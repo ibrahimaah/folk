@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Store;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -83,36 +84,49 @@ class StoreController extends Controller
 
     public function index()
     {
-        $stores = Store::all();
-        // dd(method_exists($stores[0], 'getIdAttribute'));
+        try 
+        {
+            $stores = Store::all();
+            // dd(method_exists($stores[0], 'getIdAttribute')); 
+            // $stores->transform(function ($store) {
+            //     // Only decode if the field is a string
+            //     if (is_string($store->images)) {
+            //         $store->images = json_decode($store->images, true);
+            //     }
+            //     if (is_string($store->daily_tasks)) {
+            //         $store->daily_tasks = json_decode($store->daily_tasks, true);
+            //     }
+            //     if (is_string($store->growth_opportunities)) {
+            //         $store->growth_opportunities = json_decode($store->growth_opportunities, true);
+            //     }
 
+            //     // Add decoding for other fields here if necessary
+            //     return $store;
+            // });
 
-
-        $stores->transform(function ($store) {
-            // Only decode if the field is a string
-            if (is_string($store->images)) {
-                $store->images = json_decode($store->images, true);
-            }
-            if (is_string($store->daily_tasks)) {
-                $store->daily_tasks = json_decode($store->daily_tasks, true);
-            }
-            if (is_string($store->growth_opportunities)) {
-                $store->growth_opportunities = json_decode($store->growth_opportunities, true);
-            }
-
-            // Add decoding for other fields here if necessary
-            return $store;
-        });
-
-        return response()->json($stores, 200, [], JSON_UNESCAPED_UNICODE);
+            return response()->json(['code' => 1 , 'data' => $stores], 200, [], JSON_UNESCAPED_UNICODE);
+        } 
+        catch (Exception $ex) 
+        {
+            return response()->json(['code' => 0, 'msg' =>  $ex->getMessage()]);
+        }
     }
 
     public function show($id)
     {
-        $store = Store::where('id',$id)->where('deleted_at',null)->where('is_approved',true)->first();
-        if (!$store) {
-            return response()->json([], 200, [], JSON_UNESCAPED_UNICODE);
+        try 
+        {
+            $store = Store::where('id', $id)->where('deleted_at', null)->where('is_approved', true)->first();
+            if (!$store) {
+                return response()->json([], 200, [], JSON_UNESCAPED_UNICODE);
+            }
+
+            return response()->json(['code' => 1 , 'data' => $store], 200, [], JSON_UNESCAPED_UNICODE);
         }
-        return response()->json($store, 200, [], JSON_UNESCAPED_UNICODE);
+
+        catch (Exception $ex) 
+        {
+            return response()->json(['code' => 0, 'msg' =>  $ex->getMessage()]);
+        }
     }
 }
