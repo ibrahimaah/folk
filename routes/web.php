@@ -18,4 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/stores', [StoreController::class,'init_stores']);
+Route::get('/init', [StoreController::class,'init_stores']);

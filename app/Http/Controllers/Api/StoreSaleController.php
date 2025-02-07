@@ -82,8 +82,7 @@ class StoreSaleController extends Controller
             $storeSale->update(['is_approved' => true]);
 
             // Insert the corresponding store sale data into the stores table
-            Store::create([
-                'id' => $storeSale->id,
+            $store = Store::create([ 
                 'title' => $storeSale->title,
                 'description' => $storeSale->store_activity,
                 'price' => $storeSale->price,
@@ -140,10 +139,17 @@ class StoreSaleController extends Controller
                 'is_sold' => false,  // Adjust as needed
             ]);
 
-            return response()->json([
-                'code' => 1,
-                'data' => true
-            ], 200);
+            if ($store) {
+                return response()->json([
+                    'code' => 1,
+                    'data' => $store
+                ], 201);
+            }
+            else 
+            {
+                throw new Exception("store is not created");
+            }
+            
         }
         catch(Exception $ex)
         {

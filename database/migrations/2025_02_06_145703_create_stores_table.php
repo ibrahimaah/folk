@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stores', function (Blueprint $table) {
-            $table->string('id');
+            $table->uuid('id')->primary(); // Define 'id' as a UUID
             $table->string('title');
             $table->text('description')->nullable();
             $table->integer('price');
@@ -55,7 +55,7 @@ return new class extends Migration
             $table->text('technical_support')->nullable();  // Nullable if not always available
             $table->json('training_courses')->nullable();  // Nullable as it might not always be available
             $table->json('included_assets')->nullable();  // Nullable as it might not always be available
-            $table->boolean('negotiable_price')->default(false);  // Non-nullable, defaults to false
+            $table->boolean('negotiable_price')->nullable()->default(false);  // Non-nullable, defaults to false
             $table->string('slug')->unique();
             $table->boolean('is_approved')->default(true);  // Non-nullable, defaults to false
             $table->string('seller_name')->nullable();  // Nullable if not always available
