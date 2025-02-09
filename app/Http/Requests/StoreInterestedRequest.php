@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 class StoreInterestedRequest extends FormRequest
 {
     /**
@@ -28,5 +29,18 @@ class StoreInterestedRequest extends FormRequest
             'phone' => 'required|string|max:20',
             'message' => 'nullable|string',
         ];
+    }
+
+    public function failedValidation(Validator $validator): void
+    {
+        $errors = $validator->errors();
+        $firstErrorKey = $errors->keys()[0]; // Get the first error key
+        $firstErrorMessage = $errors->first(); // Get the first error message
+
+        throw new HttpResponseException(response()->json([
+            'code' => 0,
+            'message' => $firstErrorMessage, // Return only the first error message
+            'field' => $firstErrorKey, // Include the field name
+        ], 422));
     }
 }

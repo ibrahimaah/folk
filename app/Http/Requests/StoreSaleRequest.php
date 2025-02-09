@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Requests;
-
+ 
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
-
 class StoreSaleRequest extends FormRequest
 {
     /**
@@ -43,5 +44,18 @@ class StoreSaleRequest extends FormRequest
             'inventory_included' => 'required|boolean',
             'is_approved' => 'boolean',
         ];
+    }
+
+    public function failedValidation(Validator $validator): void
+    {
+        $errors = $validator->errors();
+        $firstErrorKey = $errors->keys()[0]; // Get the first error key
+        $firstErrorMessage = $errors->first(); // Get the first error message
+
+        throw new HttpResponseException(response()->json([
+            'code' => 0,
+            'message' => $firstErrorMessage, // Return only the first error message
+            'field' => $firstErrorKey, // Include the field name
+        ], 422));
     }
 }
