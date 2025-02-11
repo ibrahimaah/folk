@@ -11,7 +11,7 @@ class StoreSale extends Model
     protected $fillable = [
         'seller_name', 'seller_phone', 'title', 'store_activity', 'store_url', 
         'store_age', 'monthly_revenue', 'price', 'is_currently_operating', 
-        'reason_for_sale', 'notes', 'category', 'platform', 'short_description', 
+        'reason_for_sale', 'notes', 'short_description', 
         'store_platform', 'store_category', 'store_language', 'target_market', 
         'inventory_included', 'is_approved','slug'
     ];

@@ -36,7 +36,7 @@ class StoreSaleController extends Controller
         try 
         {
             
-            $lastStoreSale = StoreSale::latest('slug')->first();
+            $lastStoreSale = StoreSale::latest('id')->first();
 
             if ($lastStoreSale) 
             {
@@ -100,8 +100,8 @@ class StoreSaleController extends Controller
                     'price' => $storeSale->price,
                     'monthly_revenue' => $storeSale->monthly_revenue,
                     'monthly_profit' => $storeSale->price - $storeSale->monthly_revenue,  // Assuming profit is price - revenue, adjust as needed
-                    'category' => $storeSale->category,
-                    'platform' => $storeSale->platform,
+                    // 'category' => $storeSale->category,
+                    // 'platform' => $storeSale->platform,
                     'images' => json_encode([]), // Add the appropriate images if needed
                     'user_id' => null,  // Adjust as needed, assuming you have a user column in store_sales
                     'store_activity' => $storeSale->store_activity,

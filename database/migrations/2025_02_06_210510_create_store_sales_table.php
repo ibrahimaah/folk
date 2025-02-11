@@ -24,9 +24,9 @@ return new class extends Migration
                 $table->boolean('is_currently_operating');
                 $table->text('reason_for_sale');
                 $table->text('notes')->nullable();
-                $table->string('category');
-                $table->string('platform');
-                $table->text('short_description');
+                // $table->string('category');
+                // $table->string('platform');
+                $table->text('short_description')->nullable();
                 $table->string('store_platform');
                 $table->string('store_category');
                 $table->string('store_language');

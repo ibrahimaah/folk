@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('monthly_revenue');
             $table->integer('monthly_profit');
-            $table->string('category')->nullable();
-            $table->string('platform')->nullable();
+            // $table->string('category')->nullable();
+            // $table->string('platform')->nullable();
             $table->json('images')->nullable();  // Nullable as it might not always be provided
             $table->foreignId('user_id')->nullable();  // Nullable if store is not tied to a user
             $table->text('store_activity')->nullable();  // Nullable if not always available
